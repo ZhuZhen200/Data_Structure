@@ -4,8 +4,8 @@
 #include<time.h>
 
 int DivideAndConquer(int a[], int Left, int Right);
-int MaxSubSequenceSum3(int a[], int n);
-int MaxSubSequenceSum4(int a[], int n);
+int MaxSubsequenceSum3(int a[], int n);
+int MaxSubsequenceSum4(int a[], int n);
 
 void run(int(*f)(int*, int), int a[], int n, int case_n);  //声明时间测试函数，这样才能在该源文件里使用
 
@@ -19,16 +19,19 @@ int main()
 	a = (int*)malloc(sizeof(int) * n);  //为数组分配动态内存
 	srand((unsigned int)time(0));  //初始化种子为随机值
 
-	for (i = 0; i < n; i++)
+	if (a != NULL)  //避免a分配内存出错成为空指针
 	{
-		a[i] = -100 + rand() % 200;
-		printf("%d ", a[i]);
+		for (i = 0; i < n; i++)
+		{
+			a[i] = -100 + rand() % 200;
+			printf("%d ", a[i]);
+		}
 	}
 	printf("\n");
-	run(MaxSubSequenceSum3, a, n, 3);
-	run(MaxSubSequenceSum4, a, n, 4);
-	printf("MaxSum3 = %d\n", MaxSubSequenceSum4(a, n));
-	printf("MaxSum4 = %d\n", MaxSubSequenceSum4(a, n));
+	run(MaxSubsequenceSum3, a, n, 3);
+	run(MaxSubsequenceSum4, a, n, 4);
+	printf("MaxSum3 = %d\n", MaxSubsequenceSum4(a, n));
+	printf("MaxSum4 = %d\n", MaxSubsequenceSum4(a, n));
 	free(a);
 	a = NULL;
 	return 0;
@@ -76,12 +79,12 @@ int DivideAndConquer(int a[], int Left, int Right)//分而治之
 	return Max;
 }
 
-int MaxSubSequenceSum3(int a[], int n)
+int MaxSubsequenceSum3(int a[], int n)
 {/*保持相同函数接口*/
 	return DivideAndConquer(a, 0, n - 1);
 }
 
-int MaxSubSequenceSum4(int a[], int n)//在线处理
+int MaxSubsequenceSum4(int a[], int n)//在线处理
 {
 	int i;
 	int ThisSum, MaxSum;
